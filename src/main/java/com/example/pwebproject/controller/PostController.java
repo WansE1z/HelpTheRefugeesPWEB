@@ -5,6 +5,7 @@ import com.example.pwebproject.model.Post;
 import com.example.pwebproject.model.User;
 import com.example.pwebproject.model.UserReservation;
 import com.example.pwebproject.repository.UserReservationRepository;
+import com.example.pwebproject.service.EmailService;
 import com.example.pwebproject.service.ImageService;
 import com.example.pwebproject.service.PostService;
 import com.example.pwebproject.service.UserService;
@@ -32,7 +33,7 @@ public class PostController {
     private final ImageService imageService;
     private final UserService userService;
     private final UserReservationRepository userReservationRepository;
-    private final DefaultEmailService defaultEmailService;
+    private final EmailService emailService;
 
 
     @GetMapping("/post/{postId}")
@@ -150,14 +151,7 @@ public class PostController {
             return "makeReservation";
         }
 
-        try {
-            String email = "Hello!\nYou have just made a reservation for " + userReservation.getTotalRes() + " people. \nAddress of the reservation is " + post.getAddress() + ". \nMobile number for the reservation is "  + post.getPhoneNo() + ". For futher informations do not hesitate to contact the property.\nThank you and best regards!";
-            defaultEmailService.sendSimpleEmail(userService.getAuthenticatedUser().getEmail(),
-                    "New reservation",
-                    email);
-        } catch (MailException mailException) {
-            System.out.println("Error while sending out email..{}" + mailException.getStackTrace());
-        }
+        emailService.sendEmail(userReservation, post, userService);
         userReservation.setUser(userService.getAuthenticatedUser());
         userReservation.setPost(post);
         userReservationRepository.save(userReservation);

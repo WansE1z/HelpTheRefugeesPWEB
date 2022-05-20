@@ -27,7 +27,7 @@
 
                     <div class="text-center mt-4">
                         <h1 class="h2">Welcome to "Help the refugees"</h1>
-                        <p class="lead"> Create your account</p>
+                        <h1 class="h5"> Create your account</h1>
                     </div>
 
                     <div class="card">
@@ -87,7 +87,7 @@
                                         <span class="has-error" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
                                     </div>
                                     <div class="text-center mt-3">
-                                         <button type="submit" class="btn btn-lg btn-primary">Sign up</button>
+                                         <button type="submit" class="btn btn-lg btn-primary color-orange">Sign up</button>
                                     </div>
                                 </form>
                             </div>
@@ -112,6 +112,15 @@
 </body>
 
 <style>
+    .color-orange {
+        color: black;
+        background-color: #F48840;
+    }
+
+    .color-orange:hover{
+        color: black;
+        background-color: #fb9857;
+    }
 
     .card {
         margin-bottom: 1.5rem;

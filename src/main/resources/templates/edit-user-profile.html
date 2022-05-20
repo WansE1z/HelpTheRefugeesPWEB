@@ -34,7 +34,7 @@
                         </div>
                         <div class="about">
                             <div class="main-button">
-                                <a rel="nofollow" th:href="@{/user/{username}(username=${user.getUsername()})}">Profile</a>
+                                <a style="color: black" rel="nofollow" th:href="@{/user/{username}(username=${user.getUsername()})}">Profile</a>
                             </div>
                         </div>
                     </div>
@@ -49,55 +49,44 @@
                         <input type="hidden" th:field="*{password}">
                         <input type="hidden" th:field="*{username}">
                         <div class="row mb-3">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">First Name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-6">
+                                <label>First Name</label>
                                 <input type="text" class="form-control" th:value="${user.firstName}" th:field="*{firstName}">
                                 <span class="has-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Last Name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-6">
+                            <label>Last Name</label>
                                 <input type="text" class="form-control" th:value="${user.lastName}" th:field="*{lastName}">
                                 <span class="has-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-6">
+                                <label>Email</label>
                                 <input type="text" class="form-control" th:value="${user.email}" th:field="*{email}">
                                 <label th:if="${#fields.hasErrors('email')}"
                                        th:errors="*{email}">Error</label>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Profile Picture</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-6">
+                                <label>Profile Picture</label>
                                 <input type="text" class="form-control" th:value="${user.picture}" th:field="*{picture}">
                                 <span class="has-error" th:if="${#fields.hasErrors('picture')}" th:errors="*{picture}"></span>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Birth Date</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-6">
+                                <label>Birth Date</label>
                                 <input type="date" class="form-control" th:value="${user.birthDate}" th:field="*{birthDate}">
                                 <span class="has-error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-9 text-secondary">
-                                <input type="submit" class="btn btn-primary px-4" value="Save Changes">
+                            <div class="col-sm-6">
+                                <input type="submit" class="btn btn-primary px-4" value="Save Changes" style="background-color: #F48840;color: black">
                             </div>
                         </div>
                     </form>

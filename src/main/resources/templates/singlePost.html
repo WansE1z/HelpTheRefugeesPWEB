@@ -23,6 +23,18 @@
     .mySlides {display: none}
     img {vertical-align: middle;}
 
+    .color-red i, .color-red a{
+        color: #b21f2d;
+    }
+
+    .color-blue i,.color-blue a {
+        color: #0069d9;
+    }
+
+    .color-orange i, .color-orange a {
+        color: #f48840;
+    }
+
     /* Slideshow container */
     .slideshow-container {
         max-width: 1000px;
@@ -98,7 +110,7 @@
 
 <div th:insert="navbar :: navbar">  </div>
 
-<section class="blog-posts grid-system">
+<section class="grid-system mt-5">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -143,7 +155,7 @@
                 <div class="sidebar">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="down-content">
+                            <div class="down-content mt-3">
                                 <ul class="post-info">
                                     <div class="row mb-2">
                                         <a th:href="@{/user/{username}(username=${post.user.username})}" style="color: #f48840">
@@ -154,26 +166,23 @@
                                     <div class="row mb-2"><li th:text="|Post date: ${post.date.toString().substring(0, 10)} ${post.date.toString().substring(11)}|"></li></div>
                                     <div class="row mb-2"><li th:text="|Available number of people: ${post.noAvailablePlaces}|"></li></div>
                                     <div class="row mb-2"><li th:text="|Maximum number of people:  ${post.noTotal}|"></li></div>
-                                    <div class="row text-center"><a th:href="@{/post/makereservation/{postId}(postId=${post.getPostId()})}" style="color: #f48840">Make a reservation</a></div>
+                                    <div class="row text-center"><a th:href="@{/post/makereservation/{postId}(postId=${post.getPostId()})}" style="color: #f48840;font-weight: bold;font-size: 20px">Make a reservation</a></div>
                                 </ul>
                                 <div class="post-options">
                                     <div class="row">
                                         <div class="col-4">
-                                            <ul class="post-tags" th:if="${#authentication.getName()} == ${post.user.username}">
-                                                <li><i class="fa fa-trash"></i></li>
-                                                <li><a th:href="@{/post/delete/{postId}(postId=${post.postId})}">Delete Post</a></li>
+                                            <ul class="post-tags color-red" th:if="${#authentication.getName()} == ${post.user.username}">
+                                                <li><a th:href="@{/post/delete/{postId}(postId=${post.postId})}"><i class="fa fa-trash"></i> Delete</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-4">
-                                            <ul class="post-tags" th:if="${#authentication.getName()} == ${post.user.username}">
-                                                <li><i class="fa fa-edit"></i></li>
-                                                <li><a th:href="@{/post/edit/{postId}(postId=${post.postId})}">Edit Content</a></li>
+                                            <ul class="post-tags color-blue" th:if="${#authentication.getName()} == ${post.user.username}">
+                                                <li><a th:href="@{/post/edit/{postId}(postId=${post.postId})}"><i class="fa fa-edit"></i> Content</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-4">
-                                            <ul class="post-tags" th:if="${#authentication.getName()} == ${post.user.username}">
-                                                <li><i class="fa fa-edit"></i></li>
-                                                <li><a th:href="@{/post/editPictures/{postId}(postId=${post.postId})}">Edit Pictures</a></li>
+                                            <ul class="post-tags color-orange" th:if="${#authentication.getName()} == ${post.user.username}">
+                                                <li><a th:href="@{/post/editPictures/{postId}(postId=${post.postId})}"><i class="fa fa-edit"></i> Pictures</a></li>
                                             </ul>
                                         </div>
                                     </div>

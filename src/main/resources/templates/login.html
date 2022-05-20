@@ -27,7 +27,7 @@
 
                 <div class="text-center mt-4">
                     <h1 class="h2">Welcome!</h1>
-                    <h1 class="h2">Any help is apreciated!</h1>
+                    <h1 class="h5">Any help is apreciated!</h1>
                 </div>
 
                 <div class="card">
@@ -49,10 +49,10 @@
                                     Credentialele sunt invalide.
                                 </div>
                                 <div class="text-center mt-3">
-                                    <button type="submit" class="btn btn-lg btn-warning">Login</button>
+                                    <button type="submit" class="btn btn-lg btn-warning color-orange">Login</button>
                                 </div>
                             </form>
-                            <a th:href="@{/registration}" class="text-center new-account"> Create an account </a>
+                            <a th:href="@{/registration}" class="text-center new-account" style="color: #E9782C"> Create an account </a>
                         </div>
                     </div>
                 </div>
@@ -75,6 +75,16 @@
 </body>
 
 <style>
+
+    .color-orange {
+        color: black;
+        background-color: #F48840;
+    }
+
+    .color-orange:hover{
+        color: black;
+        background-color: #fb9857;
+    }
 
     .form-signin
     {
