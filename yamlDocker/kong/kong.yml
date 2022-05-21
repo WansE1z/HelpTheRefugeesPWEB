@@ -1,0 +1,12 @@
+_format_version: "2.1"
+
+services:
+  - name: web-api-service
+    url: http://web-api:43255
+    routes:
+      - name: web-api-service-route
+        paths: 
+          - /
+
+plugins:
+  - name: prometheus

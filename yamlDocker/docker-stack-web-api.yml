@@ -1,0 +1,116 @@
+version: "3.8"
+
+services:
+    web-api:
+        image: gitlab.cs.pub.ro:5050/idp-web-api/pwebproject:latest
+        networks:
+            - internal
+            - database
+        depends_on:
+            - "db"
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/proiect_pweb?createDatabaseIfNotExist=true
+            SPRING_DATASOURCE_USERNAME: root
+            SPRING_DATASOURCE_PASSWORD: root
+
+    db:
+        image: mysql:latest
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+        volumes:
+            - db-volume:/var/lib/mysql
+        networks:
+            - database
+            - database-admin
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: "proiect_pweb"
+        ports:
+            - 3306:3306
+
+    adminer:
+        image: adminer
+        networks:
+            - internal
+            - database-admin
+        ports:
+            - 9000:8080
+        depends_on:
+            - "db"
+
+    kong:
+        image: kong:latest
+        volumes:
+            - /home/cristi/Univ/idp/proiect/kong:/usr/local/kong/declarative
+        environment:
+            KONG_DATABASE: 'off'
+            KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+            KONG_PROXY_ACCESS_LOG: /dev/stdout
+            KONG_ADMIN_ACCESS_LOG: /dev/stdout
+            KONG_PROXY_ERROR_LOG: /dev/stderr
+            KONG_ADMIN_ERROR_LOG: /dev/stderr
+            KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+        ports:
+            - 80:8000
+            - 443:8443
+            - 8001:8001
+            - 8444:8444
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+        networks:
+            - internal
+            - logging
+        depends_on:
+            - adminer
+
+    grafana:
+        image: grafana/grafana:latest
+        volumes:
+            - grafana-storage:/var/lib/grafana
+        ports:
+            - 3000:3000
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+        networks:
+            - logging
+        depends_on:
+            - "prometheus"
+    
+    prometheus:
+        image: prom/prometheus
+        volumes:
+            - /home/cristi/Univ/idp/proiect/prometheus/config.yml:/etc/prometheus/prometheus.yml
+        ports:
+            - 9090:9090
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+        networks:
+            - logging
+        depends_on:
+            - kong
+
+
+    rabbitmq:
+        image: rabbitmq:management-alpine
+        ports:
+            - 5672:5672
+            - 15672:15672
+        networks:
+            - rmq
+        hostname: rabbitmq
+
+volumes:
+    db-volume:
+    grafana-storage:
+
+networks:
+    internal:
+    database:
+    database-admin:
+    logging:
+    rmq:
